@@ -1,0 +1,34 @@
+{
+  "name": "Stromzähler PIN Sender",
+  "short_name": "PIN Sender",
+  "description": "Android App zur Übertragung von PINs an deutsche digitale Stromzähler mittels Lichtsignalen",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F1419",
+  "theme_color": "#0080FF",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "de",
+  "categories": ["utilities", "productivity"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMTkyJyBoZWlnaHQ9JzE5Micgdmlld0JveD0nMCAwIDE5MiAxOTInIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9J2JnJyB4MT0nMCUnIHkxPScwJScgeDI9JzEwMCUnIHkyPScxMDAlJz4KICAgICAgPHN0b3Agb2Zmc2V0PScwJScgc3R5bGU9J3N0b3AtY29sb3I6IzAwODBGRjtzdG9wLW9wYWNpdHk6MScgLz4KICAgICAgPHN0b3Agb2Zmc2V0PScxMDAlJyBzdHlsZT0nc3RvcC1jb2xvcjojMDA2NkNDO3N0b3Atb3BhY2l0eToxJyAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9JzE5MicgaGVpZ2h0PScxOTInIHJ4PSc0OCcgZmlsbD0ndXJsKCNiZyknLz4KICA8cGF0aCBkPSdNOTYgMzAgTDcwIDkwIEwxMTAgOTAgTDk2IDE2MiBMMTIyIDEwMiBMODIgMTAyIFonIGZpbGw9J3doaXRlJyBzdHJva2U9J25vbmUnLz4KICA8Y2lyY2xlIGN4PSc5NicgY3k9Jzk2JyByPSc2MCcgZmlsbD0nbm9uZScgc3Ryb2tlPSd3aGl0ZScgc3Ryb2tlLXdpZHRoPSczJyBvcGFjaXR5PScwLjMnLz4KICA8Y2lyY2xlIGN4PSc5NicgY3k9Jzk2JyByPSc0NScgZmlsbD0nbm9uZScgc3Ryb2tlPSd3aGl0ZScgc3Ryb2tlLXdpZHRoPScyJyBvcGFjaXR5PScwLjUnLz4KICA8Y2lyY2xlIGN4PSc5NicgY3k9Jzk2JyByPSczMCcgZmlsbD0nbm9uZScgc3Ryb2tlPSd3aGl0ZScgc3Ryb2tlLXdpZHRoPScxJyBvcGFjaXR5PScwLjcnLz4KPC9zdmc+",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nNTEyJyBoZWlnaHQ9JzUxMicgdmlld0JveD0nMCAwIDUxMiA1MTInIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2Zyc+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9J2JnJyB4MT0nMCUnIHkxPScwJScgeDI9JzEwMCUnIHkyPScxMDAlJz4KICAgICAgPHN0b3Agb2Zmc2V0PScwJScgc3R5bGU9J3N0b3AtY29sb3I6IzAwODBGRjtzdG9wLW9wYWNpdHk6MScgLz4KICAgICAgPHN0b3Agb2Zmc2V0PScxMDAlJyBzdHlsZT0nc3RvcC1jb2xvcjojMDA2NkNDO3N0b3Atb3BhY2l0eToxJyAvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9JzUxMicgaGVpZ2h0PSc1MTInIHJ4PScxMjgnIGZpbGw9J3VybCgjYmcpJy8+CiAgPHBhdGggZD0nTTI1NiA4MCBMMTU0IDI0MCBMM0C2IDI0MCBMMTI4IDQzMiBMMzI2IDI3MiBMMjIwIDI3MiBaJyBmaWxsPSd3aGl0ZScgc3Ryb2tlPSdub25lJy8+CiAgPGNpcmNsZSBjeD0nMjU2JyBjeT0nMjU2JyByPScxNjAnIGZpbGw9J25vbmUnIHN0cm9rZT0nd2hpdGUnIHN0cm9rZS13aWR0aD0nOCcgb3BhY2l0eT0nMC4zJy8+CiAgPGNpcmNsZSBjeD0nMjU2JyBjeT0nMjU2JyByPScxMjAnIGZpbGw9J25vbmUnIHN0cm9rZT0nd2hpdGUnIHN0cm9rZS13aWR0aD0nNicgb3BhY2l0eT0nMC41Jy8+CiAgPGNpcmNsZSBjeD0nMjU2JyBjeT0nMjU2JyByPSc4MCcgZmlsbD0nbm9uZScgc3Ryb2tlPSd3aGl0ZScgc3Ryb2tlLXdpZHRoPSc0JyBvcGFjaXR5PScwLjcnLz4KPC9zdmc+",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    }
+  ],
+  "permissions": [
+    "camera"
+  ],
+  "features": [
+    "camera",
+    "torch"
+  ]
+}
