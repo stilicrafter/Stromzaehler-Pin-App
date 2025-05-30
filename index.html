@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stromzähler PIN Sender</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1><i class="fas fa-bolt"></i> Stromzähler PIN</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- PIN Input Section -->
+            <section class="pin-section">
+                <h2>Zähler-PIN eingeben</h2>
+                <div class="pin-input-container">
+                    <input 
+                        type="text" 
+                        id="pinInput" 
+                        placeholder="PIN eingeben (nur Ziffern)"
+                        maxlength="20"
+                        pattern="[0-9]*"
+                        inputmode="numeric"
+                    >
+                    <button class="clear-btn" id="clearPin">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="pin-info">
+                    <p><i class="fas fa-info-circle"></i> Geben Sie die PIN Ihres digitalen Stromzählers ein</p>
+                </div>
+            </section>
+
+            <!-- Flash Code Preview -->
+            <section class="morse-section">
+                <h3>Blinkcode Vorschau</h3>
+                <div class="morse-display" id="morseDisplay">
+                    Geben Sie eine PIN ein, um den Blinkcode zu sehen
+                </div>
+            </section>
+
+            <!-- Transmission Controls -->
+            <section class="controls-section">
+                <button class="send-btn" id="sendBtn" disabled>
+                    <i class="fas fa-satellite-dish"></i>
+                    PIN senden
+                </button>
+                
+                <button class="stop-btn" id="stopBtn" disabled>
+                    <i class="fas fa-stop"></i>
+                    Stoppen
+                </button>
+            </section>
+
+            <!-- Status Display -->
+            <section class="status-section">
+                <div class="status-card" id="statusCard">
+                    <div class="status-icon">
+                        <i class="fas fa-circle status-indicator" id="statusIndicator"></i>
+                    </div>
+                    <div class="status-text">
+                        <h4 id="statusTitle">Bereit</h4>
+                        <p id="statusMessage">Geben Sie eine PIN ein und drücken Sie "PIN senden"</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Progress Bar -->
+            <section class="progress-section" id="progressSection" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="progress-text" id="progressText">0%</div>
+            </section>
+
+            <!-- Instructions -->
+            <section class="instructions-section">
+                <h3>Anweisungen</h3>
+                <div class="instruction-list">
+                    <div class="instruction-item">
+                        <i class="fas fa-1"></i>
+                        <span>Positionieren Sie Ihr Gerät so, dass das Licht die Photodiode des Zählers erreicht</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-2"></i>
+                        <span>Geben Sie die PIN Ihres Stromzählers ein</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-3"></i>
+                        <span>Drücken Sie "PIN senden" um die Übertragung zu starten</span>
+                    </div>
+                    <div class="instruction-item">
+                        <i class="fas fa-4"></i>
+                        <span>Halten Sie das Gerät ruhig während der Übertragung</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Light Source Settings -->
+            <section class="settings-section">
+                <h3>Lichtquelle</h3>
+                <div class="setting-item">
+                    <label for="flashlightMode">Lichtmodus:</label>
+                    <select id="flashlightMode" disabled>
+                        <option value="screen">Bildschirm-Flash</option>
+                        <option value="led">LED-Taschenlampe</option>
+                    </select>
+                </div>
+                <div class="flashlight-status-container">
+                    <p id="flashlightStatus" class="flashlight-status checking">
+                        <i class="fas fa-spinner fa-spin"></i> Prüfe LED-Verfügbarkeit...
+                    </p>
+                </div>
+            </section>
+
+            <!-- Timing Settings -->
+            <section class="settings-section">
+                <h3>Timing-Einstellungen</h3>
+                <div class="setting-item">
+                    <label for="dotDuration">Blitz-Dauer (ms):</label>
+                    <input type="range" id="dotDuration" min="100" max="500" value="200">
+                    <span id="dotDurationValue">200ms</span>
+                </div>
+                <div class="setting-item">
+                    <label for="pauseDuration">Pause zwischen Ziffern (ms):</label>
+                    <input type="range" id="pauseDuration" min="200" max="1000" value="800">
+                    <span id="pauseDurationValue">800ms</span>
+                </div>
+            </section>
+        </main>
+
+        <!-- Flash Overlay for Light Simulation -->
+        <div class="flash-overlay" id="flashOverlay"></div>
+    </div>
+
+    <script src="morse.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
