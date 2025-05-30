@@ -16,6 +16,7 @@ class StromzaehlerApp {
         this.initializeElements();
         this.initializeEventListeners();
         this.initializeTheme();
+        this.loadSavedPins();
         this.updateMorseDisplay();
         this.checkFlashlightSupport();
     }
@@ -44,7 +45,10 @@ class StromzaehlerApp {
             pauseDuration: document.getElementById('pauseDuration'),
             pauseDurationValue: document.getElementById('pauseDurationValue'),
             flashlightMode: document.getElementById('flashlightMode'),
-            flashlightStatus: document.getElementById('flashlightStatus')
+            flashlightStatus: document.getElementById('flashlightStatus'),
+            savePin: document.getElementById('savePin'),
+            savedPins: document.getElementById('savedPins'),
+            pinName: document.getElementById('pinName')
         };
     }
 
@@ -96,6 +100,16 @@ class StromzaehlerApp {
             this.handleFlashlightModeChange();
         });
 
+        // PIN saving functionality
+        this.elements.savePin.addEventListener('click', () => {
+            this.savePinLocally();
+        });
+
+        // Saved PINs selection
+        this.elements.savedPins.addEventListener('change', () => {
+            this.loadSelectedPin();
+        });
+
         // Prevent form submission on Enter
         document.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && e.target.id === 'pinInput') {
@@ -105,6 +119,140 @@ class StromzaehlerApp {
                 }
             }
         });
+    }
+
+    /**
+     * Load saved PINs from localStorage
+     */
+    loadSavedPins() {
+        const savedPins = this.getSavedPins();
+        this.updateSavedPinsDropdown(savedPins);
+    }
+
+    /**
+     * Get saved PINs from localStorage
+     */
+    getSavedPins() {
+        try {
+            const pins = localStorage.getItem('stromzaehler-pins');
+            return pins ? JSON.parse(pins) : {};
+        } catch (error) {
+            console.error('Error loading saved PINs:', error);
+            return {};
+        }
+    }
+
+    /**
+     * Save PIN to localStorage
+     */
+    savePinLocally() {
+        const pin = this.elements.pinInput.value;
+        const pinName = this.elements.pinName.value.trim();
+        
+        if (!pin) {
+            this.updateStatus('error', 'Fehler', 'Bitte geben Sie eine PIN ein');
+            return;
+        }
+        
+        const validation = this.morseHandler.validatePin(pin);
+        if (!validation.isValid) {
+            this.updateStatus('error', 'Fehler', validation.error);
+            return;
+        }
+        
+        const name = pinName || `PIN ${new Date().toLocaleDateString('de-DE')}`;
+        
+        try {
+            const savedPins = this.getSavedPins();
+            savedPins[name] = pin;
+            localStorage.setItem('stromzaehler-pins', JSON.stringify(savedPins));
+            
+            this.updateSavedPinsDropdown(savedPins);
+            this.elements.pinName.value = '';
+            this.updateStatus('success', 'Gespeichert', `PIN als "${name}" gespeichert`);
+        } catch (error) {
+            console.error('Error saving PIN:', error);
+            this.updateStatus('error', 'Fehler', 'PIN konnte nicht gespeichert werden');
+        }
+    }
+
+    /**
+     * Load selected PIN from dropdown
+     */
+    loadSelectedPin() {
+        const selectedName = this.elements.savedPins.value;
+        if (!selectedName) return;
+        
+        const savedPins = this.getSavedPins();
+        const pin = savedPins[selectedName];
+        
+        if (pin) {
+            this.elements.pinInput.value = pin;
+            this.handlePinInput();
+            this.updateStatus('ready', 'PIN geladen', `"${selectedName}" wurde geladen`);
+        }
+    }
+
+    /**
+     * Update saved PINs dropdown
+     */
+    updateSavedPinsDropdown(savedPins) {
+        const dropdown = this.elements.savedPins;
+        
+        // Clear existing options except the first one
+        while (dropdown.children.length > 1) {
+            dropdown.removeChild(dropdown.lastChild);
+        }
+        
+        // Add saved PINs
+        Object.keys(savedPins).forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = `${name} (${savedPins[name]})`;
+            dropdown.appendChild(option);
+        });
+        
+        // Add delete option if there are saved PINs
+        if (Object.keys(savedPins).length > 0) {
+            const deleteOption = document.createElement('option');
+            deleteOption.value = 'DELETE';
+            deleteOption.textContent = '--- PIN löschen ---';
+            deleteOption.style.color = '#FF0000';
+            dropdown.appendChild(deleteOption);
+            
+            dropdown.addEventListener('change', (e) => {
+                if (e.target.value === 'DELETE') {
+                    this.showDeletePinDialog();
+                    e.target.value = '';
+                }
+            });
+        }
+    }
+
+    /**
+     * Show delete PIN dialog
+     */
+    showDeletePinDialog() {
+        const savedPins = this.getSavedPins();
+        const pinNames = Object.keys(savedPins);
+        
+        if (pinNames.length === 0) {
+            this.updateStatus('error', 'Fehler', 'Keine gespeicherten PINs vorhanden');
+            return;
+        }
+        
+        const pinToDelete = prompt(
+            `Welche PIN möchten Sie löschen?\n\n${pinNames.map((name, i) => `${i + 1}. ${name}`).join('\n')}\n\nGeben Sie den Namen ein:`
+        );
+        
+        if (pinToDelete && savedPins[pinToDelete]) {
+            delete savedPins[pinToDelete];
+            localStorage.setItem('stromzaehler-pins', JSON.stringify(savedPins));
+            this.updateSavedPinsDropdown(savedPins);
+            this.updateStatus('success', 'Gelöscht', `"${pinToDelete}" wurde gelöscht`);
+        } else if (pinToDelete) {
+            this.updateStatus('error', 'Fehler', 'PIN nicht gefunden');
+        }
     }
 
     /**
@@ -463,15 +611,47 @@ document.addEventListener('DOMContentLoaded', () => {
     new StromzaehlerApp();
 });
 
-// Service Worker registration for PWA capabilities (optional)
+// Service Worker registration for PWA capabilities
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
             .then((registration) => {
-                console.log('SW registered: ', registration);
+                console.log('PWA Service Worker registered successfully');
+                
+                // Check for app install prompt
+                let deferredPrompt;
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredPrompt = e;
+                    
+                    // Show install button if not already installed
+                    if (!window.matchMedia('(display-mode: standalone)').matches) {
+                        showInstallButton(deferredPrompt);
+                    }
+                });
             })
             .catch((registrationError) => {
-                console.log('SW registration failed: ', registrationError);
+                console.log('Service Worker registration failed:', registrationError);
             });
     });
+}
+
+// Show install button for PWA
+function showInstallButton(deferredPrompt) {
+    const installButton = document.createElement('button');
+    installButton.textContent = 'Als App installieren';
+    installButton.className = 'install-btn';
+    installButton.onclick = () => {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((result) => {
+            if (result.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            }
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        });
+    };
+    
+    // Add to header
+    document.querySelector('.app-header').appendChild(installButton);
 }

@@ -2,8 +2,13 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0080FF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PIN Sender">
     <title>Stromzähler PIN Sender</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -37,6 +42,30 @@
                 </div>
                 <div class="pin-info">
                     <p><i class="fas fa-info-circle"></i> Geben Sie die PIN Ihres digitalen Stromzählers ein</p>
+                </div>
+            </section>
+
+            <!-- PIN Storage Section -->
+            <section class="storage-section">
+                <h3>PIN Speichern & Laden</h3>
+                <div class="storage-controls">
+                    <div class="save-pin-container">
+                        <input 
+                            type="text" 
+                            id="pinName" 
+                            placeholder="Name für PIN (optional)"
+                            maxlength="50"
+                        >
+                        <button class="save-btn" id="savePin">
+                            <i class="fas fa-save"></i>
+                            PIN speichern
+                        </button>
+                    </div>
+                    <div class="load-pin-container">
+                        <select id="savedPins">
+                            <option value="">-- Gespeicherte PIN wählen --</option>
+                        </select>
+                    </div>
                 </div>
             </section>
 

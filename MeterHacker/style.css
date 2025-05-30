@@ -170,6 +170,72 @@ section h2, section h3 {
     color: hsl(var(--primary));
 }
 
+/* PIN Storage Section */
+.storage-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.save-pin-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.save-pin-container input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid hsl(var(--border));
+    border-radius: 8px;
+    font-size: 16px;
+    background: hsl(var(--surface));
+    color: hsl(var(--text-primary));
+    transition: border-color 0.3s ease;
+}
+
+.save-pin-container input:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+}
+
+.save-btn {
+    background: hsl(var(--success));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.save-btn:hover {
+    background: hsl(120 100% 30%);
+    transform: translateY(-1px);
+}
+
+.load-pin-container select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid hsl(var(--border));
+    border-radius: 8px;
+    background: hsl(var(--surface));
+    color: hsl(var(--text-primary));
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.load-pin-container select:focus {
+    outline: none;
+    border-color: hsl(var(--primary));
+}
+
 /* Morse Display */
 .morse-display {
     background: hsl(var(--surface-variant));
@@ -454,6 +520,15 @@ section h2, section h3 {
     .setting-item span {
         text-align: left;
     }
+    
+    .save-pin-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .save-pin-container input {
+        margin-bottom: 8px;
+    }
 }
 
 /* Accessibility */
@@ -462,6 +537,37 @@ section h2, section h3 {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+}
+
+/* Install Button */
+.install-btn {
+    background: hsl(var(--secondary));
+    color: hsl(var(--text-primary));
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 12px;
+}
+
+.install-btn:hover {
+    background: hsl(45 100% 45%);
+    transform: translateY(-1px);
+}
+
+/* PWA Standalone Mode Adjustments */
+@media (display-mode: standalone) {
+    .app-container {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    .app-header {
+        padding-top: 24px;
     }
 }
 
